@@ -22,5 +22,11 @@ public class main {
         ObligSBinTre<Integer> tre = new ObligSBinTre<>(Comparator.naturalOrder());
         for(int verdi: a){tre.leggInn(verdi);}
         System.out.println(tre.antall());
+
+        //oppgave 2
+        Integer[] aa = {4,7,2,9,4,10,8,7,4,6};
+
+        ObligSBinTre<Integer> tre2 = new ObligSBinTre<>(Comparator.naturalOrder());
+        for ( int verdi : aa ) tre2.leggInn(verdi);
     }
 }
