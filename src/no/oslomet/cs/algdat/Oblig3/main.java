@@ -32,5 +32,9 @@ public class main {
 
 
         //Oppgave 3
+        Integer[] b = {4,7,2,9,4,10,8,7,4,6,1};
+        ObligSBinTre<Integer> btre = new ObligSBinTre<>(Comparator.naturalOrder());
+        for(int verdi: b){btre.leggInn(verdi);}
+        System.out.println(btre);
     }
 }

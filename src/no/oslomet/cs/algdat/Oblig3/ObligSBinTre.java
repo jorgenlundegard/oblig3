@@ -126,30 +126,36 @@ public class ObligSBinTre<T> implements Beholder<T>
   private static <T> Node<T> nesteInorden(Node<T> p)
   {
 
-    if(!p.høyre.equals(null)){
+    if(p.høyre != null){
       p = p.høyre;
-      while(!p.venstre.equals(null)){p = p.venstre;}
+      while(p.venstre != null){p = p.venstre;}
       return p;
     }
-    else{
-      if(p.equals(p.forelder.venstre)){return p.forelder;}
+    else if(p.forelder != null){
+      if(p == p.forelder.venstre){return p.forelder;}
       else{
-        while(!p.equals(p.forelder.venstre) || !p.forelder.equals(null)){p = p.forelder;}
-        if(p.forelder.equals(null)){return null;}
+        if(p.forelder != null){
+          p = p.forelder;
+          if(p == p.forelder.venstre){return p.forelder;}
+        }
       }
     }
-    return p.forelder;
+    return null;
   }
   
   @Override
   public String toString()
   {
     Node<T> node = rot;
-    while(!node.venstre.equals(null)){node = node.venstre;}
+    if(node == null){return "[]";}
+    while(node.venstre != null){node = node.venstre; }
     StringBuilder s = new StringBuilder();
-    s.append("[");
-    while(!nesteInorden(node).equals(null)){
+    s.append("[" + node.verdi);
+    while(node != null) {
+      s.append(", ");
       s.append(nesteInorden(node).verdi);
+      node = nesteInorden(node);
+      if(nesteInorden(node)==null){break;}
     }
     s.append("]");
     return s.toString();
