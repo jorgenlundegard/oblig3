@@ -60,7 +60,7 @@ public class ObligSBinTre<T> implements Beholder<T>
 
     // p er nå null, dvs. ute av treet, q er den siste vi passerte
 
-    p = new Node<T>(verdi, q);                   // oppretter en ny node
+    p = new Node<T>(verdi, q);               // oppretter en ny node
 
     if (q == null) rot = p;                  // p blir rotnode
     else if (cmp < 0) q.venstre = p;         // venstre barn til q
@@ -125,13 +125,34 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   private static <T> Node<T> nesteInorden(Node<T> p)
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+    if(!p.høyre.equals(null)){
+      p = p.høyre;
+      while(!p.venstre.equals(null)){p = p.venstre;}
+      return p;
+    }
+    else{
+      if(p.equals(p.forelder.venstre)){return p.forelder;}
+      else{
+        while(!p.equals(p.forelder.venstre) || !p.forelder.equals(null)){p = p.forelder;}
+        if(p.forelder.equals(null)){return null;}
+      }
+    }
+    return p.forelder;
   }
   
   @Override
   public String toString()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+    Node<T> node = rot;
+    while(!node.venstre.equals(null)){node = node.venstre;}
+    StringBuilder s = new StringBuilder();
+    s.append("[");
+    while(!nesteInorden(node).equals(null)){
+      s.append(nesteInorden(node).verdi);
+    }
+    s.append("]");
+    return s.toString();
   }
   
   public String omvendtString()

@@ -28,5 +28,9 @@ public class main {
 
         ObligSBinTre<Integer> tre2 = new ObligSBinTre<>(Comparator.naturalOrder());
         for ( int verdi : aa ) tre2.leggInn(verdi);
+
+
+
+        //Oppgave 3
     }
 }
