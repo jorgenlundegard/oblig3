@@ -237,7 +237,43 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public String[] grener()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if(tom()){
+          String[] tomListe;
+          tomListe = new String[0];
+          return tomListe;
+      }
+      ArrayList<Node<T>> bladNoder = new ArrayList<>();
+      //finne bladnoder ved inorden traversering. Finner første i inorden:
+      Node<T> node = rot;// "gjeldende" node
+      while (node.venstre != null) node = node.venstre;
+      if(antall==1) bladNoder.add(node);
+      else {
+          while (nesteInorden(node) != null) {
+              node = nesteInorden(node);
+              if (Objects.requireNonNull(node).høyre == null && node.venstre == null) {
+                  bladNoder.add(node);
+              }
+          }
+      }
+
+      String[] grener = new String[bladNoder.size()];
+      int index = 0;
+
+      //traverser opp via foreldreref. fra hver bladnode og legger i streng.
+      for(Node<T> bladNode : bladNoder){
+          StringBuilder s = new StringBuilder();
+          s.append("[");
+          while(!Objects.requireNonNull(bladNode).equals(rot)){
+              bladNode = bladNode.forelder;
+              assert bladNode != null;
+              s.insert(1, bladNode.verdi);
+              if(bladNode.forelder!=null) s.insert(1, ", ");
+          }
+          s.append("]");
+          grener[index] = s.toString();
+          index ++;
+      }
+      return grener;
   }
   
   public String bladnodeverdier()

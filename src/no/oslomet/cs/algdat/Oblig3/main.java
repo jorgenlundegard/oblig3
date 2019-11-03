@@ -44,6 +44,13 @@ public class main {
         System.out.println(btre.antall());
 
         btre.leggInn(1);
+        System.out.println(btre);
 
+        //Oppgave 7
+        Integer[] c = {5,1,7,2,5,4,9,3};
+        ObligSBinTre<Integer> treOppg7 = new ObligSBinTre<>(Comparator.naturalOrder());
+        for(int verdi: c){treOppg7.leggInn(verdi);}
+
+        for(String gren : treOppg7.grener()) System.out.println(gren);
     }
 }
