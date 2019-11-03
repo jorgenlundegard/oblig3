@@ -154,6 +154,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     // Har klassene 'antall', 'inneholder' og 'tom' til disposisjon.
     // Må finne en måte å teste alle nodene for gitt verdi. Hvis true antall++.
       int antall = 0;
+      int runder = 0;
 
 
       // If true kjor gjennom hele for aa finne antallet.
@@ -161,14 +162,24 @@ public class ObligSBinTre<T> implements Beholder<T>
     if (inneholder(verdi)) {
         if (verdi == null) return 0;
 
-        Node<T> p = rot;
+        Node<T> forelder = rot;
+        Node<T> venstre = rot;
+        Node<T> hoyre = rot;
 
-        while (p != null)
+        while (forelder != null && runder < antall())
         {
+            runder++;
+
+            if (forelder.verdi == verdi) {antall++;}
+
+
+
+
+            /*
             int cmp = comp.compare(verdi, p.verdi);
             if (cmp < 0) p = p.venstre;
             else if (cmp > 0) p = p.høyre;
-            else antall++;
+            else antall++;*/
         }
     }
 

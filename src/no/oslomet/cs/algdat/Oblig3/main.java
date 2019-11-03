@@ -25,9 +25,16 @@ public class main {
 
         //oppgave 2
         Integer[] aa = {4,7,2,9,4,10,8,7,4,6};
+        ObligSBinTre<Integer> tree = new ObligSBinTre<>(Comparator.naturalOrder());
+        for ( int verdi : aa) tree.leggInn(verdi);
 
-        ObligSBinTre<Integer> tre2 = new ObligSBinTre<>(Comparator.naturalOrder());
-        for ( int verdi : aa ) tre2.leggInn(verdi);
+        System.out.println("\nOppgave2:");
+        System.out.println(tree.antall());           //10
+        System.out.println(tree.antall(5));    //0
+        System.out.println(tree.antall(4));    //3
+        System.out.println(tree.antall(7));    //2
+        System.out.println(tree.antall(10));   //1
+
 
 
 
