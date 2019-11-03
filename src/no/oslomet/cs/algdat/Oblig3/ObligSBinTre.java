@@ -92,12 +92,54 @@ public class ObligSBinTre<T> implements Beholder<T>
   @Override
   public boolean fjern(T verdi)
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if (verdi == null) return false;  // treet har ingen nullverdier
+
+      Node<T> p = rot, q = null;   // q skal være forelder til p
+
+      while (p != null)            // leter etter verdi
+      {
+          int cmp = comp.compare(verdi,p.verdi);      // sammenligner
+          if (cmp < 0) { q = p; p = p.venstre; }      // går til venstre
+          else if (cmp > 0) { q = p; p = p.høyre; }   // går til høyre
+          else break;    // den søkte verdien ligger i p
+      }
+      if (p == null) return false;   // finner ikke verdi
+
+      if (p.venstre == null || p.høyre == null)  // Tilfelle 1) og 2)
+      {
+          Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
+          if (p == rot) {
+              rot = b;
+          }
+          else if (p == q.venstre) q.venstre = b;
+          else q.høyre = b;
+          if(b != null) b.forelder = q;
+      }
+      else  // Tilfelle 3)
+      {
+          Node<T> r = nesteInorden(p), s = Objects.requireNonNull(r).forelder;;   // finner neste i inorden
+          p.verdi = r.verdi;   // kopierer verdien i r til p
+
+          if (!s.equals(p)) {
+              s.venstre = r.høyre;
+          }
+          else s.høyre = r.høyre;
+      }
+
+      antall--;   // det er nå én node mindre i treet
+      endringer ++;
+      return true;
   }
   
   public int fjernAlle(T verdi)
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if(tom()) return 0;
+      int antallFjernet = 0;
+      while(true){
+        if(!fjern(verdi)) break;
+        antallFjernet++;
+      }
+      return antallFjernet;
   }
   
   @Override
@@ -120,41 +162,57 @@ public class ObligSBinTre<T> implements Beholder<T>
   @Override
   public void nullstill()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if(antall == 0) return;
+    //finner første node i inorden
+      ArrayList<Node<T>> noder = new ArrayList<>();
+      Node<T> nodeSkalNulles = rot;
+      while(nodeSkalNulles.venstre != null){nodeSkalNulles = nodeSkalNulles.venstre; }
+      Node<T> node = nesteInorden(nodeSkalNulles);
+
+      for(int i = 0; i<antall; i++){
+          noder.add(nodeSkalNulles);
+          nodeSkalNulles = node;
+          if(node != null) node = nesteInorden(node);
+      }
+      for(Node<T> a : noder){
+          a.høyre = null;
+          a.venstre = null;
+          a.forelder = null;
+          a.verdi = null;
+          antall--;
+      }
+      rot = null;
   }
   
   private static <T> Node<T> nesteInorden(Node<T> p)
   {
-
     if(p.høyre != null){
       p = p.høyre;
       while(p.venstre != null){p = p.venstre;}
-      return p;
+      return p;             //Hvis noden har et høyre subtre, er neste i inorden den nederste venstre noden i dette.
     }
-    else if(p.forelder != null){
-      if(p == p.forelder.venstre){return p.forelder;}
-      else{
-        while(p.forelder != null){
-          p = p.forelder;
-          if(p.forelder == null){return null;}
+    else{
+        // Ellers gaar vi oppover i treet til gjeldende node er venstre barn til sin foreldernode.
+        // Dette er neste i inorden.
+        while(true){
+          if(p.forelder == null){return null;}  //Hvis gjeldende node er siste i inorden, returneres null.
           if(p.equals(p.forelder.venstre)){return p.forelder;}
+          p = p.forelder;
         }
-      }
     }
-    return null;
   }
   
   @Override
   public String toString()
   {
     if(tom()){return "[]";}
-    Node<T> node = rot;
-    while(node.venstre != null){node = node.venstre; }
+    Node<T> node = rot;                                 // "gjeldende" node
+    while(node.venstre != null){node = node.venstre; }  // finner første node i inorden
     StringBuilder s = new StringBuilder();
-    s.append("[");s.append(node.verdi);
-    while(node != null) {
+    s.append("[");s.append(node.verdi);                 //Legger til første verdi i stringbuilder
+    while(true) {                                       // løkke som fortsetter til break;
       node = nesteInorden(node);
-      if(node == null){break;}
+      if(node == null){break;}                    //Hvis nesteInorden(node) er null er node siste verdi. Lokken brytes.
       s.append(", ");
       s.append(node.verdi);
     }
