@@ -151,6 +151,9 @@ public class ObligSBinTre<T> implements Beholder<T>
   public int antall(T verdi)
   {
 
+      // LØSNING: kjør en iterativ inorder, skal prøve på det med en stack/deque. hver gang den går gjennom en med ønskede value -> antall++
+      // For å få den mest effektiv finn første ved inneholder(), deretter inorder frem til p.value>value.
+
     // Har klassene 'antall', 'inneholder' og 'tom' til disposisjon.
     // Må finne en måte å teste alle nodene for gitt verdi. Hvis true antall++.
       int antall = 0;
