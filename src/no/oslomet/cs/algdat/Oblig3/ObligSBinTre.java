@@ -134,9 +134,10 @@ public class ObligSBinTre<T> implements Beholder<T>
     else if(p.forelder != null){
       if(p == p.forelder.venstre){return p.forelder;}
       else{
-        if(p.forelder != null){
+        while(p.forelder != null){
           p = p.forelder;
-          if(p == p.forelder.venstre){return p.forelder;}
+          if(p.forelder == null){return null;}
+          if(p.equals(p.forelder.venstre)){return p.forelder;}
         }
       }
     }
@@ -146,16 +147,16 @@ public class ObligSBinTre<T> implements Beholder<T>
   @Override
   public String toString()
   {
+    if(tom()){return "[]";}
     Node<T> node = rot;
-    if(node == null){return "[]";}
     while(node.venstre != null){node = node.venstre; }
     StringBuilder s = new StringBuilder();
-    s.append("[" + node.verdi);
+    s.append("[");s.append(node.verdi);
     while(node != null) {
-      s.append(", ");
-      s.append(nesteInorden(node).verdi);
       node = nesteInorden(node);
-      if(nesteInorden(node)==null){break;}
+      if(node == null){break;}
+      s.append(", ");
+      s.append(node.verdi);
     }
     s.append("]");
     return s.toString();
