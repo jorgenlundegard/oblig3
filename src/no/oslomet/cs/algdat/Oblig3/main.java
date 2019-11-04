@@ -49,10 +49,10 @@ public class main {
         System.out.println(btre.høyreGren());
 
         //Oppgave 7
-        Integer[] c = {4,7,2,9,4,10,8,7,4,6};
+        Integer[] c = {4, 1, 6, 3, 5, 8, 2, 7, 9};
         ObligSBinTre<Integer> treOppg7 = new ObligSBinTre<>(Comparator.naturalOrder());
         for(int verdi: c){treOppg7.leggInn(verdi);}
-
+        System.out.println("oppgave7");
         for(String gren : treOppg7.grener()) System.out.println(gren);
     }
 }

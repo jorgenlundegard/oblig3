@@ -272,13 +272,23 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public String høyreGren()
   {
-      return grener()[grener().length-1];
+      if(tom()) return("[]");
+      String[] grener = grener();
+      if (grener.length == 1) {return grener[0];}
+      return grener[grener.length - 1];
   }
   
   public String lengstGren()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if (tom()) return("[]");
+      String[] grener = grener();
+      String lengstGren = grener[0];
+      for(int i = 1; i<grener.length; i++){
+          if(grener[i].length()>grener[i-1].length()) lengstGren = grener[i];
+      }
+      return lengstGren;
   }
+
   
   public String[] grener()
   {
@@ -298,6 +308,11 @@ public class ObligSBinTre<T> implements Beholder<T>
               if (Objects.requireNonNull(node).høyre == null && node.venstre == null) {
                   bladNoder.add(node);
               }
+          }
+          if(bladNoder.size()==0){     //spesialtilfelle der treet har en gren, og første i inorden er bladnoden.
+              node = rot;
+              while (node.venstre != null) node = node.venstre;
+              bladNoder.add(node);
           }
       }
 
