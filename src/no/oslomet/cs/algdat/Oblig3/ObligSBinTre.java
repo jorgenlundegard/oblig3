@@ -153,7 +153,6 @@ public class ObligSBinTre<T> implements Beholder<T>
   {
 
       // LØSNING: kjører en iterativ inorder bruker en stack. hver gang den går gjennom en med ønskede value -> antall++
-      // TODO: (maybe) For å få den mest effektiv finn første ved inneholder(), deretter inorder frem til p.value>value.
       if (!inneholder(verdi)) {return 0;}       // Dersom verdien ikke finnes er det ingen grunn til aa se hvor mange.
       int antall = 0;                           // En teller for antall verdier.
       Node<T> noden = rot;                      // Starter med roten av treet
@@ -413,14 +412,43 @@ public class ObligSBinTre<T> implements Beholder<T>
             p = nesteInorden(p);
             if(q.venstre==null && q.høyre==null) break;
         }
+        removeOK = true;
         return q.verdi;
     }
     
     @Override
     public void remove() {
 
+        if (iteratorendringer != endringer)
+            throw new ConcurrentModificationException();
+
+        if (!removeOK){
+            throw new IllegalStateException();
+        }
+
+        /*
+        if (q == rot)                          // q er lik roten
+        {
+            rot = q.venstre;                     // q fjernes
+        }
+        else
+        {
+            Node<T> f = rot;                     // starter i roten
+            while (f.venstre != q) f = f.venstre;    // går mot høyre
+            f.høyre = q.høyre;                 // q fjernes
+        }
+
+        */
+
+
+        //if (q.høyre == null && q.venstre == null){ q = null}
+
+        q = null;
+        endringer++;
+        iteratorendringer++;
+        antall--;
+        removeOK = false;
     }
 
   } // BladnodeIterator
-
 } // ObligSBinTre
