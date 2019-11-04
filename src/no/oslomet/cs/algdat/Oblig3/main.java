@@ -54,7 +54,7 @@ public class main {
         System.out.println(btre);
 
         //Oppgave 7
-        Integer[] c = {5,1,7,2,5,4,9,3};
+        Integer[] c = {4,7,2,9,4,10,8,7,4,6};
         ObligSBinTre<Integer> treOppg7 = new ObligSBinTre<>(Comparator.naturalOrder());
         for(int verdi: c){treOppg7.leggInn(verdi);}
 
