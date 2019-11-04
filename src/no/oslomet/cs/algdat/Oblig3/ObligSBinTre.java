@@ -161,7 +161,7 @@ public class ObligSBinTre<T> implements Beholder<T>
       while (true) {                            // En lokke som bare gir ture helt til man finner en tom node
           if (noden != null) {
               stack.push(noden);                // Legger inn noden i stacken
-              noden = noden.venstre;            // Nodens venstre barn blir valgt og gjen
+              noden = noden.venstre;            // Nodens venstre barn blir valgt og kjorer gjennom lokken igjen
 
           } else {
               if (stack.isEmpty()){break;}      // Når stacken er tom avsluttes lokken
