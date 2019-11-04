@@ -335,19 +335,31 @@ public class ObligSBinTre<T> implements Beholder<T>
       }
       return grener;
   }
-  
+  private void getBladNoder(Node<T> node, StringBuilder s)
+  {
+      if(node==null) return;
+
+      if(node.venstre==null && node.høyre==null){
+          s.insert(0, node.verdi).insert(node.verdi.toString().length(),", ");  //legger til verdien i stringbuilder hvis noden er en bladnode
+      }
+      //kaller metoden igjen på barna
+      getBladNoder(node.høyre, s);
+      getBladNoder(node.venstre, s);
+  }
   public String bladnodeverdier()
   {
-      if (rot == null) return "[]";
-      bladnodeverdier();
-      return "Bob";
+      if(tom()) return "[]";                    //tom liste skal returnere "[]"
+      StringBuilder s = new StringBuilder();
+      getBladNoder(rot,s);
+      s.insert(0,"[").delete(s.length()-2, s.length()).insert(s.length(),"]");  //setter klammer rundt og sletter overflødige komma.
+      return s.toString();
   }
   
   public String postString()
   {
       String utskrift = "[";
       Node<T> node = rot;
-      if (node == null) return "";
+      if (node == null) return "[]";
       Stack<Node> stack1 = new Stack<Node>();
       Stack<Node> stack2 = new Stack<Node>();
       stack1.push(node);
