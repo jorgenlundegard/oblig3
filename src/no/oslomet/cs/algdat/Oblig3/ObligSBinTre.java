@@ -341,7 +341,7 @@ public class ObligSBinTre<T> implements Beholder<T>
   {
       if (rot == null) return "[]";
       bladnodeverdier();
-      return "Bobs your uncle";
+      return "Bob";
   }
   
   public String postString()
