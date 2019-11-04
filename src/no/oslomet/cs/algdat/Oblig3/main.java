@@ -54,5 +54,8 @@ public class main {
         for(int verdi: c){treOppg7.leggInn(verdi);}
         System.out.println("oppgave7");
         for(String gren : treOppg7.grener()) System.out.println(gren);
+
+        //Oppgave8
+        System.out.println(btre.postString());
     }
 }

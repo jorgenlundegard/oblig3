@@ -339,12 +339,35 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public String bladnodeverdier()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if (rot == null) return "[]";
+      bladnodeverdier();
+      return "Bobs your uncle";
   }
   
   public String postString()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      String utskrift = "[";
+      Node<T> node = rot;
+      if (node == null) return "";
+      Stack<Node> stack1 = new Stack<Node>();
+      Stack<Node> stack2 = new Stack<Node>();
+      stack1.push(node);
+
+      while (!stack1.isEmpty()){
+          node = stack1.pop();
+          stack2.push(node);
+          if (node.venstre != null) stack1.push(node.venstre);
+          if (node.høyre != null) stack1.push(node.høyre);
+      }
+
+      while (!stack2.isEmpty()) {
+          if (utskrift != "[") {utskrift += ", ";}
+          node = stack2.pop();
+          //System.out.println(node.verdi);
+          utskrift += node;
+      }
+
+      return utskrift + "]";
   }
   
   @Override
@@ -394,9 +417,8 @@ public class ObligSBinTre<T> implements Beholder<T>
     }
     
     @Override
-    public void remove()
-    {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+    public void remove() {
+
     }
 
   } // BladnodeIterator
