@@ -39,19 +39,14 @@ public class main {
         System.out.println(tree.omvendtString());
 
         //Oppgave 3, 5
-        Integer[] b = {5,1,7,2,5,4,9,3};
+        Integer[] b = {4,7,2,9,4,10,8,7,4,6};
         ObligSBinTre<Integer> btre = new ObligSBinTre<>(Comparator.naturalOrder());
         for(int verdi: b){btre.leggInn(verdi);}
         System.out.println(btre.antall());
         System.out.println(btre);
 
-        btre.fjernAlle(5);
-        btre.nullstill();
-        System.out.println(btre);
-        System.out.println(btre.antall());
-
-        btre.leggInn(1);
-        System.out.println(btre);
+        //Oppgave6
+        System.out.println(btre.høyreGren());
 
         //Oppgave 7
         Integer[] c = {4,7,2,9,4,10,8,7,4,6};

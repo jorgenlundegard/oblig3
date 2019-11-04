@@ -272,7 +272,7 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public String høyreGren()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      return grener()[grener().length-1];
   }
   
   public String lengstGren()
