@@ -139,6 +139,7 @@ public class ObligSBinTre<T> implements Beholder<T>
         if(!fjern(verdi)) break;
         antallFjernet++;
       }
+      endringer = endringer + antallFjernet;
       return antallFjernet;
   }
   
@@ -204,6 +205,7 @@ public class ObligSBinTre<T> implements Beholder<T>
           antall--;
       }
       rot = null;
+      endringer = 0;
   }
   
   private static <T> Node<T> nesteInorden(Node<T> p)
@@ -364,13 +366,16 @@ public class ObligSBinTre<T> implements Beholder<T>
     
     @Override
     public T next() {
+        if (iteratorendringer != endringer)
+            throw new ConcurrentModificationException();
         if(tom()) throw new NoSuchElementException();
-        while (true) {                //traverserer inorden til første bladnode er funnet.
+        while (true) {                   //traverserer inorden til neste bladnode er funnet.
+            if(p==null) throw new NoSuchElementException();
+            q=p;
             p = nesteInorden(p);
-            if(p == null) throw new NoSuchElementException();
-            else if(p.venstre==null && p.høyre==null) break;
+            if(q.venstre==null && q.høyre==null) break;
         }
-        return p.verdi;
+        return q.verdi;
     }
     
     @Override
