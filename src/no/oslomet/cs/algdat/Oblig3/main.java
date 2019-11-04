@@ -24,7 +24,7 @@ public class main {
         System.out.println(tre.antall());
 
         //oppgave 2
-        Integer[] aa = {4,7,2,9,4,10,8,7,4,6};
+        Integer[] aa = {4,7,2,9,4,10,8,7,4,6,1};
         ObligSBinTre<Integer> tree = new ObligSBinTre<>(Comparator.naturalOrder());
         for ( int verdi : aa) tree.leggInn(verdi);
 
@@ -35,8 +35,8 @@ public class main {
         System.out.println(tree.antall(7));    //2
         System.out.println(tree.antall(10));   //1
 
-
-
+        System.out.println("\nOppgave4:");
+        System.out.println(tree.omvendtString());
 
         //Oppgave 3, 5
         Integer[] b = {5,1,7,2,5,4,9,3};

@@ -153,23 +153,24 @@ public class ObligSBinTre<T> implements Beholder<T>
 
       // LØSNING: kjører en iterativ inorder bruker en stack. hver gang den går gjennom en med ønskede value -> antall++
       // TODO: (maybe) For å få den mest effektiv finn første ved inneholder(), deretter inorder frem til p.value>value.
+      if (!inneholder(verdi)) {return 0;}       // Dersom verdien ikke finnes er det ingen grunn til aa se hvor mange.
       int antall = 0;                           // En teller for antall verdier.
       Node<T> noden = rot;                      // Starter med roten av treet
 
       if (noden == null) return 0;              // Returnerer med 0 dersom verdien ikke finnes i treet  | dersom treet er tomt?
       Stack<Node> stack = new Stack<Node>();    // Lager en stack som lagrer nodene
-      while (true) {                            // En lokke som bare gir ture helt til man finner en tom node
+      while (true) {                            // En lokke som bare gir ture helt til man finner en tom node og en tom stack
           if (noden != null) {
               stack.push(noden);                // Legger inn noden i stacken
               noden = noden.venstre;            // Nodens venstre barn blir valgt og kjorer gjennom lokken igjen
 
           } else {
-              if (stack.isEmpty()){break;}      // Når stacken er tom avsluttes lokken
+              if (stack.isEmpty()){break;}      // Naar stacken er tom avsluttes lokken
               noden = stack.pop();              // Popper overste verdi i stcken ut, men lagrer den som "noden"
               if (noden.verdi == verdi) {antall++;} // Hvis verdien er den man leter etter oker antall
               noden = noden.høyre;              // Fortsetter lokken med noden sitt hoyre barn
           }
-      }
+      } // while
 
     return antall;
   }
@@ -243,7 +244,28 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public String omvendtString()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      // Skal løses iterativt med inverse inorder. Skal bruke hjelpe stack. OBS ikke foreldrepekere?
+
+      String utskrift = "[";                    // Utskriften begynner med "["
+      Node<T> noden = rot;                      // Starter med roten av treet
+
+      if (noden == null) return utskrift += "]";// Returnerer med "]" dersom verdier ikke finnes i treet
+      Stack<Node> stack = new Stack<Node>();    // Lager en stack som lagrer nodene
+      while (true) {                            // En lokke som bare gir ture helt til man finner en tom node og en tom stack
+          if (noden != null) {
+              stack.push(noden);                // Legger inn noden i stacken
+              noden = noden.høyre;              // Nodens hoyre barn blir valgt og kjorer gjennom lokken igjen
+
+          } else {
+              if (stack.isEmpty()){break;}      // Naar stacken er tom avsluttes lokken
+              noden = stack.pop();              // Popper overste verdi i stcken ut, men lagrer den som "noden"
+              if (!utskrift.equals("[")) {utskrift += ", ";}
+              utskrift += noden.verdi;          // Hvis verdien er den man leter etter oker antall
+              noden = noden.venstre;            // Fortsetter lokken med noden sitt venstre barn
+          }
+      } // while
+
+      return utskrift += "]";
   }
   
   public String høyreGren()
