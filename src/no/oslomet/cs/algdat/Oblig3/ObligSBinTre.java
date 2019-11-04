@@ -431,27 +431,56 @@ public class ObligSBinTre<T> implements Beholder<T>
     @Override
     public void remove() {
 
+        Stakk<Node<T>> s = new TabellStakk<>();  // for traversering
+
+
         if (iteratorendringer != endringer)
             throw new ConcurrentModificationException();
 
         if (!removeOK){
             throw new IllegalStateException();
         }
-
         /*
-        if (q == rot)                          // q er lik roten
-        {
-            rot = q.venstre;                     // q fjernes
-        }
-        else
-        {
-            Node<T> f = rot;                     // starter i roten
-            while (f.venstre != q) f = f.venstre;    // går mot høyre
-            f.høyre = q.høyre;                 // q fjernes
-        }
+        //1a
+        if ( q.høyre == null && p == null) {
+            if (q == rot)                          // q er lik roten
+            {
+                rot = q.venstre;                     // q fjernes
+            } else {
+                Node<T> f = rot;                     // starter i roten
+                while (f.venstre != q) f = f.venstre;    // går mot høyre
+                f.høyre = q.høyre;                 // q fjernes
+            }
+        }//1a
+*/
+        //1b
+        else if (q.høyre == null && p != null) {
+            if (q == p.venstre)                    // p.venstre har ikke høyre subtre
+            {
+                p.venstre = q.venstre;               // q fjernes
+            } else {
+                Node<T> f = p.venstre;               // starter i p.venstre
+                while (f.høyre != q) f = f.høyre;    // går mot høyre
+                f.høyre = q.venstre;                 // q fjernes
+            }
+        }//1b
 
-        */
+        //2
+        else {
+            q.verdi = p.verdi;                     // kopierer
 
+            if (q.høyre == p)                      // q.høyre har ikke venstre barn
+            {
+                q.høyre = p.høyre;                   // fjerner p
+            } else                                   // q.høyre har venstre barn
+            {
+                Node<T> f = s.taUt();                // forelder f til p ligger på stakken
+                f.venstre = p.høyre;                 // fjerner p
+                while (f != q.høyre) f = s.taUt();   // fjerner fra stakken
+            }
+
+            p = q;
+        }//2
 
         //if (q.høyre == null && q.venstre == null){ q = null}
 
