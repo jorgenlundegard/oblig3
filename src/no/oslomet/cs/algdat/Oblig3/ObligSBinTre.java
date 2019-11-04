@@ -151,24 +151,23 @@ public class ObligSBinTre<T> implements Beholder<T>
   public int antall(T verdi)
   {
 
-      // LØSNING: kjør en iterativ inorder, skal prøve på det med en stack/deque. hver gang den går gjennom en med ønskede value -> antall++
-      // For å få den mest effektiv finn første ved inneholder(), deretter inorder frem til p.value>value.
-      int antall = 0;
-      Node<T> noden = rot;
+      // LØSNING: kjører en iterativ inorder bruker en stack. hver gang den går gjennom en med ønskede value -> antall++
+      // TODO: (maybe) For å få den mest effektiv finn første ved inneholder(), deretter inorder frem til p.value>value.
+      int antall = 0;                           // En teller for antall verdier.
+      Node<T> noden = rot;                      // Starter med roten av treet
 
-
-      if (noden == null) return 0;
-      Stack<Node> s = new Stack<Node>();
-      while (true) {
+      if (noden == null) return 0;              // Returnerer med 0 dersom verdien ikke finnes i treet
+      Stack<Node> stack = new Stack<Node>();    // Lager en stack som lagrer nodene
+      while (true) {                            // En lokke som bare gir ture helt til man finner en tom node
           if (noden != null) {
-              s.push(noden);
-              noden = noden.venstre;
+              stack.push(noden);                // Legger inn noden i stacken
+              noden = noden.venstre;            // Nodens venstre barn blir valgt og gjen
 
           } else {
-              if (s.isEmpty()){break;}
-              noden = s.pop();
-              if (noden.verdi == verdi) {antall++;}
-              noden = noden.høyre;
+              if (stack.isEmpty()){break;}      // Når stacken er tom avsluttes lokken
+              noden = stack.pop();              // Popper overste verdi i stcken ut, men lagrer den som "noden"
+              if (noden.verdi == verdi) {antall++;} // Hvis verdien er den man leter etter oker antall
+              noden = noden.høyre;              // Fortsetter lokken med noden sitt hoyre barn
           }
       }
 
