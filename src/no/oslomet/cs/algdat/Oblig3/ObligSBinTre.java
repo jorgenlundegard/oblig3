@@ -440,30 +440,38 @@ public class ObligSBinTre<T> implements Beholder<T>
         if (!removeOK){
             throw new IllegalStateException();
         }
+        //1
+        if (q.høyre == null) {                              // Hvis true '1' else '2'
+            //a
+            if (p == null) {                                // Hvis true 'a' else 'b'
 
-        //1a
-        if ( q.høyre == null && p == null) {
-            if (q == rot)                          // q er lik roten
-            {
-                rot = q.venstre;                     // q fjernes
-            } else {
-                Node<T> f = rot;                     // starter i roten
-                while (f.høyre != q) f = f.høyre;    // går mot høyre
-                f.høyre = q.høyre;                 // q fjernes
-            }
-        }//1a
+                if (q == rot)                               // q er lik roten
+                {
+                    rot = q.venstre;                        // q fjernes
+                }
+                else
+                {
+                    Node<T> f = rot;                        // starter i roten
+                    while (f.høyre != q) f = f.høyre;       // gaar mot hoyre
+                    f.høyre = q.venstre;                    // q fjernes
+                }
+            }//a
 
-        //1b
-        else if (q.høyre == null && p != null) {
-            if (q == p.venstre)                    // p.venstre har ikke høyre subtre
-            {
-                p.venstre = q.venstre;               // q fjernes
-            } else {
-                Node<T> f = p.venstre;               // starter i p.venstre
-                while (f.høyre != q) f = f.høyre;    // går mot høyre
-                f.høyre = q.venstre;                 // q fjernes
-            }
-        }//1b
+            //b
+            else {
+
+                if (q == p.venstre)                         // p.venstre har ikke hoyre subtre
+                {
+                    p.venstre = q.venstre;                  // q fjernes
+                }
+                else
+                {
+                    Node<T> f = p.venstre;                  // starter i p.venstre
+                    while (f.høyre != q) f = f.høyre;       // gaar mot hoyre
+                    f.høyre = q.venstre;                    // q fjernes
+                }
+            }//b
+        }//1
 
         //2
         else {
@@ -472,7 +480,8 @@ public class ObligSBinTre<T> implements Beholder<T>
             if (q.høyre == p)                      // q.høyre har ikke venstre barn
             {
                 q.høyre = p.høyre;                   // fjerner p
-            } else                                   // q.høyre har venstre barn
+            }
+            else                                   // q.høyre har venstre barn
             {
                 Node<T> f = s.taUt();                // forelder f til p ligger på stakken
                 f.venstre = p.høyre;                 // fjerner p

@@ -57,5 +57,12 @@ public class main {
 
         //Oppgave8
         System.out.println(btre.postString());
+
+        //Oppgave10
+        System.out.println("\nOppgave10:");
+        while (!btre.tom()) {
+            System.out.println(btre);
+            btre.fjernHvis(x ->true);
+        }
     }
 }
