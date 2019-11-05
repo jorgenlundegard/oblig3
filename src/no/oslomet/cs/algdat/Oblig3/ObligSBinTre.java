@@ -423,6 +423,7 @@ public class ObligSBinTre<T> implements Beholder<T>
             q = p;
             p = nesteInorden(p);
             if (q.venstre==null && q.høyre == null) break;
+            else if(!hasNext()) break;
         }
         removeOK = true;
         return q.verdi;
