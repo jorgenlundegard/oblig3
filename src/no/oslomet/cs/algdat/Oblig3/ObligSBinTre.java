@@ -422,7 +422,7 @@ public class ObligSBinTre<T> implements Beholder<T>
             if (p == null) throw new NoSuchElementException();
             q = p;
             p = nesteInorden(p);
-            if(q.venstre==null && q.høyre==null) break;
+            if (q.venstre==null && q.høyre == null) break;
         }
         removeOK = true;
         return q.verdi;
