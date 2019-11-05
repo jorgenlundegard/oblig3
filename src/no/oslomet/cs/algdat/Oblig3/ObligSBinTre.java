@@ -417,10 +417,10 @@ public class ObligSBinTre<T> implements Beholder<T>
     public T next() {
         if (iteratorendringer != endringer)
             throw new ConcurrentModificationException();
-        if(tom()) throw new NoSuchElementException();
+        if (tom()) throw new NoSuchElementException();
         while (true) {                   //traverserer inorden til neste bladnode er funnet.
-            if(p==null) throw new NoSuchElementException();
-            q=p;
+            if (p == null) throw new NoSuchElementException();
+            q = p;
             p = nesteInorden(p);
             if(q.venstre==null && q.høyre==null) break;
         }
@@ -432,7 +432,6 @@ public class ObligSBinTre<T> implements Beholder<T>
     public void remove() {
 
         Stakk<Node<T>> s = new TabellStakk<>();  // for traversering
-
 
         if (iteratorendringer != endringer)
             throw new ConcurrentModificationException();
