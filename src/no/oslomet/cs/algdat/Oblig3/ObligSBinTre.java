@@ -452,7 +452,10 @@ public class ObligSBinTre<T> implements Beholder<T>
                 else
                 {
                     Node<T> f = rot;                        // starter i roten
-                    while (f.høyre != q) f = f.høyre;       // gaar mot hoyre
+                    while (f.høyre != q ) {
+                        if (f.høyre==null) return;
+                        f = f.høyre;       // gaar mot hoyre
+                    }
                     f.høyre = q.venstre;                    // q fjernes
                 }
             }//a
