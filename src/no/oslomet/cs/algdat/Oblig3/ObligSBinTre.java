@@ -1,5 +1,10 @@
 package no.oslomet.cs.algdat.Oblig3;
 
+//Gruppemedlemmer:
+//Mads Andreas Lundbye - s331353
+//Jorgen Lundegaard - s331385
+
+
 ////////////////// ObligSBinTre /////////////////////////////////
 
 import java.util.*;
@@ -9,10 +14,10 @@ public class ObligSBinTre<T> implements Beholder<T>
   private static final class Node<T>   // en indre nodeklasse
   {
     private T verdi;                   // nodens verdi
-    private Node<T> venstre, høyre;    // venstre og høyre barn
+    private Node<T> venstre, høyre;    // venstre og hoyre barn
     private Node<T> forelder;          // forelder
 
-    // konstruktør
+    // konstruktor
     private Node(T verdi, Node<T> v, Node<T> h, Node<T> forelder)
     {
       this.verdi = verdi;
@@ -20,13 +25,13 @@ public class ObligSBinTre<T> implements Beholder<T>
       this.forelder = forelder;
     }
 
-    private Node(T verdi, Node<T> forelder)  // konstruktør
+    private Node(T verdi, Node<T> forelder)  // konstruktor
     {
       this(verdi, null, null, forelder);
     }
 
     @Override
-    public String toString(){ return "" + verdi;}
+    public String toString() { return "" + verdi;}
 
   } // class Node
 
@@ -36,7 +41,7 @@ public class ObligSBinTre<T> implements Beholder<T>
 
   private final Comparator<? super T> comp;       // komparator
 
-  public ObligSBinTre(Comparator<? super T> c)    // konstruktør
+  public ObligSBinTre(Comparator<? super T> c)    // konstruktor
   {
     rot = null;
     antall = 0;
@@ -58,13 +63,13 @@ public class ObligSBinTre<T> implements Beholder<T>
       p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
     }
 
-    // p er nå null, dvs. ute av treet, q er den siste vi passerte
+    // p er naa null, dvs. ute av treet, q er den siste vi passerte
 
     p = new Node<T>(verdi, q);               // oppretter en ny node
 
     if (q == null) rot = p;                  // p blir rotnode
     else if (cmp < 0) q.venstre = p;         // venstre barn til q
-    else q.høyre = p;                        // høyre barn til q
+    else q.høyre = p;                        // hoyre barn til q
 
     antall++;                                // én verdi mer i treet
     endringer++;
@@ -94,14 +99,14 @@ public class ObligSBinTre<T> implements Beholder<T>
   {
       if (verdi == null) return false;  // treet har ingen nullverdier
 
-      Node<T> p = rot, q = null;   // q skal være forelder til p
+      Node<T> p = rot, q = null;   // q skal vaere forelder til p
 
       while (p != null)            // leter etter verdi
       {
           int cmp = comp.compare(verdi,p.verdi);      // sammenligner
-          if (cmp < 0) { q = p; p = p.venstre; }      // går til venstre
-          else if (cmp > 0) { q = p; p = p.høyre; }   // går til høyre
-          else break;    // den søkte verdien ligger i p
+          if (cmp < 0) { q = p; p = p.venstre; }      // gaar til venstre
+          else if (cmp > 0) { q = p; p = p.høyre; }   // gaar til hoyre
+          else break;    // den sokte verdien ligger i p
       }
       if (p == null) return false;   // finner ikke verdi
 
@@ -126,7 +131,7 @@ public class ObligSBinTre<T> implements Beholder<T>
           else s.høyre = r.høyre;
       }
 
-      antall--;   // det er nå én node mindre i treet
+      antall--;   // det er naa én node mindre i treet
       endringer ++;
       return true;
   }
@@ -152,7 +157,7 @@ public class ObligSBinTre<T> implements Beholder<T>
   public int antall(T verdi)
   {
 
-      // LØSNING: kjører en iterativ inorder bruker en stack. hver gang den går gjennom en med ønskede value -> antall++
+      // LoSNING: kjorer en iterativ inorder bruker en stack. hver gang den gaar gjennom en med onskede value -> antall++
       if (!inneholder(verdi)) {return 0;}       // Dersom verdien ikke finnes er det ingen grunn til aa se hvor mange.
       int antall = 0;                           // En teller for antall verdier.
       Node<T> noden = rot;                      // Starter med roten av treet
@@ -185,7 +190,7 @@ public class ObligSBinTre<T> implements Beholder<T>
   public void nullstill()
   {
       if(antall == 0) return;
-    //finner første node i inorden
+    //finner forste node i inorden
       ArrayList<Node<T>> noder = new ArrayList<>();
       Node<T> nodeSkalNulles = rot;
       while(nodeSkalNulles.venstre != null){nodeSkalNulles = nodeSkalNulles.venstre; }
@@ -212,7 +217,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     if(p.høyre != null){
       p = p.høyre;
       while(p.venstre != null){p = p.venstre;}
-      return p;             //Hvis noden har et høyre subtre, er neste i inorden den nederste venstre noden i dette.
+      return p;             //Hvis noden har et hoyre subtre, er neste i inorden den nederste venstre noden i dette.
     }
     else{
         // Ellers gaar vi oppover i treet til gjeldende node er venstre barn til sin foreldernode.
@@ -230,10 +235,10 @@ public class ObligSBinTre<T> implements Beholder<T>
   {
     if(tom()){return "[]";}
     Node<T> node = rot;                                 // "gjeldende" node
-    while(node.venstre != null){node = node.venstre; }  // finner første node i inorden
+    while(node.venstre != null){node = node.venstre; }  // finner forste node i inorden
     StringBuilder s = new StringBuilder();
-    s.append("[");s.append(node.verdi);                 //Legger til første verdi i stringbuilder
-    while(true) {                                       // løkke som fortsetter til break;
+    s.append("[");s.append(node.verdi);                 //Legger til forste verdi i stringbuilder
+    while(true) {                                       // lokke som fortsetter til break;
       node = nesteInorden(node);
       if(node == null){break;}                    //Hvis nesteInorden(node) er null er node siste verdi. Lokken brytes.
       s.append(", ");
@@ -245,7 +250,7 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public String omvendtString()
   {
-      // Skal løses iterativt med inverse inorder. Skal bruke hjelpe stack. OBS ikke foreldrepekere?
+      // Skal loses iterativt med inverse inorder. Skal bruke hjelpe stack. OBS ikke foreldrepekere?
 
       String utskrift = "[";                    // Utskriften begynner med "["
       Node<T> noden = rot;                      // Starter med roten av treet
@@ -297,7 +302,7 @@ public class ObligSBinTre<T> implements Beholder<T>
           return tomListe;
       }
       ArrayList<Node<T>> bladNoder = new ArrayList<>();
-      //finne bladnoder ved inorden traversering. Finner første i inorden:
+      //finne bladnoder ved inorden traversering. Finner forste i inorden:
       Node<T> node = rot;// "gjeldende" node
       while (node.venstre != null) node = node.venstre;
       if(antall==1) bladNoder.add(node);
@@ -308,7 +313,7 @@ public class ObligSBinTre<T> implements Beholder<T>
                   bladNoder.add(node);
               }
           }
-          if(bladNoder.size()==0){     //spesialtilfelle der treet har en gren, og første i inorden er bladnoden.
+          if(bladNoder.size()==0){     //spesialtilfelle der treet har en gren, og forste i inorden er bladnoden.
               node = rot;
               while (node.venstre != null) node = node.venstre;
               bladNoder.add(node);
@@ -342,7 +347,7 @@ public class ObligSBinTre<T> implements Beholder<T>
       if(node.venstre==null && node.høyre==null){
           s.insert(0, node.verdi).insert(node.verdi.toString().length(),", ");  //legger til verdien i stringbuilder hvis noden er en bladnode
       }
-      //kaller metoden igjen på barna
+      //kaller metoden igjen paa barna
       getBladNoder(node.høyre, s);
       getBladNoder(node.venstre, s);
   }
@@ -351,7 +356,7 @@ public class ObligSBinTre<T> implements Beholder<T>
       if(tom()) return "[]";                    //tom liste skal returnere "[]"
       StringBuilder s = new StringBuilder();
       getBladNoder(rot,s);
-      s.insert(0,"[").delete(s.length()-2, s.length()).insert(s.length(),"]");  //setter klammer rundt og sletter overflødige komma.
+      s.insert(0,"[").delete(s.length()-2, s.length()).insert(s.length(),"]");  //setter klammer rundt og sletter overflodige komma.
       return s.toString();
   }
   
@@ -393,16 +398,16 @@ public class ObligSBinTre<T> implements Beholder<T>
     private boolean removeOK = false;
     private int iteratorendringer = endringer;
     
-    private BladnodeIterator()  // konstruktør
+    private BladnodeIterator()  // konstruktor
     {
         if(antall > 1){
-            while(p.venstre!=null){     //finner første i inorden
+            while(p.venstre!=null){     //finner forste i inorden
                 p = p.venstre;
             }
-            while(true){                //traverserer inorden til første bladnode er funnet.
+            while(true){                //traverserer inorden til forste bladnode er funnet.
                 if(p.venstre!=null || p.høyre!=null){
                     p = nesteInorden(p);
-                }else break;            //både venstre og høyre barn er null, da er p en bladnode.
+                }else break;            //baade venstre og hoyre barn er null, da er p en bladnode.
             }
         }
     }
@@ -426,22 +431,6 @@ public class ObligSBinTre<T> implements Beholder<T>
                 break;
             }
         }
-
-        /*Node<T> forrige;
-        this.q = p;   //q settes til bladnoden iteratoren peker på før den går til neste.
-        while (true) {                   //traverserer inorden til neste bladnode er funnet.
-            forrige = p;
-            if (p == null) throw new NoSuchElementException();
-            p = nesteInorden(p);
-            if (forrige.venstre==null && forrige.høyre == null){
-                q = forrige;
-                if(p == null){break;}
-                while((p.høyre!=null && p.venstre!=null)) {
-                    p = nesteInorden(p);
-                    if(p==null){break;}
-                }
-        }
-        */
         removeOK = true;
         return q.verdi;
     }
@@ -457,8 +446,8 @@ public class ObligSBinTre<T> implements Beholder<T>
         while (t != null)            // leter etter q
         {
             int cmp = comp.compare(q.verdi,t.verdi);      // sammenligner
-            if (cmp < 0) t = t.venstre;    // går til venstre
-            else if (cmp > 0) t = t.høyre;   // går til høyre
+            if (cmp < 0) t = t.venstre;    // gaar til venstre
+            else if (cmp > 0) t = t.høyre;   // gaar til hoyre
             else break;    // t = q
         }
         if(t==null) throw new NoSuchElementException();
@@ -474,80 +463,9 @@ public class ObligSBinTre<T> implements Beholder<T>
 
 
         removeOK = false;
-        antall--;   // det er nå én node mindre i treet
+        antall--;   // det er naa én node mindre i treet
         iteratorendringer++;
         endringer ++;
-
-        /* JØRGEN
-        Stakk<Node<T>> s = new TabellStakk<>();  // for traversering
-
-        if (iteratorendringer != endringer)
-            throw new ConcurrentModificationException();
-
-        if (!removeOK){
-            throw new IllegalStateException();
-        }
-        //1
-        if (q.høyre == null) {                              // Hvis true '1' else '2'
-            //a
-            if (p == null) {                                // Hvis true 'a' else 'b'
-
-                if (q == rot)                               // q er lik roten
-                {
-                    rot = q.venstre;                        // q fjernes
-                }
-                else
-                {
-                    Node<T> f = rot;                        // starter i roten
-                    while (f.høyre != q ) {
-                        if (f.høyre==null) return;
-                        f = f.høyre;       // gaar mot hoyre
-                    }
-                    f.høyre = q.venstre;                    // q fjernes
-                }
-            }//a
-
-            //b
-            else {
-
-                if (q == p.venstre)                         // p.venstre har ikke hoyre subtre
-                {
-                    p.venstre = q.venstre;                  // q fjernes
-                }
-                else
-                {
-                    Node<T> f = p.venstre;                  // starter i p.venstre
-                    while (f.høyre != q) f = f.høyre;       // gaar mot hoyre
-                    f.høyre = q.venstre;                    // q fjernes
-                }
-            }//b
-        }//1
-
-        //2
-        else {
-            q.verdi = p.verdi;                     // kopierer
-
-            if (q.høyre == p)                      // q.høyre har ikke venstre barn
-            {
-                q.høyre = p.høyre;                   // fjerner p
-            }
-            else                                   // q.høyre har venstre barn
-            {
-                Node<T> f = s.taUt();                // forelder f til p ligger på stakken
-                f.venstre = p.høyre;                 // fjerner p
-                while (f != q.høyre) f = s.taUt();   // fjerner fra stakken
-            }
-
-            p = q;
-        }//2
-
-        q = null;
-        endringer++;
-        iteratorendringer++;
-        antall--;
-        removeOK = false;
-        */
     }
-
   } // BladnodeIterator
 } // ObligSBinTre
