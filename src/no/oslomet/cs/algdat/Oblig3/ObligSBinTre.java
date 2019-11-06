@@ -417,15 +417,31 @@ public class ObligSBinTre<T> implements Beholder<T>
     public T next() {
         if (iteratorendringer != endringer)
             throw new ConcurrentModificationException();
-        if (tom() || !hasNext()) throw new NoSuchElementException();
-        Node<T> forrige;
+        if (tom() || p==null) throw new NoSuchElementException();
+        q = p;
+        while(true){
+            p = nesteInorden(p);
+            if(p == null) break;
+            if(p.venstre==null && p.høyre==null){
+                break;
+            }
+        }
+
+        /*Node<T> forrige;
         this.q = p;   //q settes til bladnoden iteratoren peker på før den går til neste.
         while (true) {                   //traverserer inorden til neste bladnode er funnet.
             forrige = p;
             if (p == null) throw new NoSuchElementException();
             p = nesteInorden(p);
-            if (forrige.venstre==null && forrige.høyre == null){q = forrige; break;}
+            if (forrige.venstre==null && forrige.høyre == null){
+                q = forrige;
+                if(p == null){break;}
+                while((p.høyre!=null && p.venstre!=null)) {
+                    p = nesteInorden(p);
+                    if(p==null){break;}
+                }
         }
+        */
         removeOK = true;
         return q.verdi;
     }
@@ -443,7 +459,7 @@ public class ObligSBinTre<T> implements Beholder<T>
             int cmp = comp.compare(q.verdi,t.verdi);      // sammenligner
             if (cmp < 0) t = t.venstre;    // går til venstre
             else if (cmp > 0) t = t.høyre;   // går til høyre
-            else break;    // den søkte verdien ligger i p
+            else break;    // t = q
         }
         if(t==null) throw new NoSuchElementException();
 
