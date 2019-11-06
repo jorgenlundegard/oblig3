@@ -417,13 +417,14 @@ public class ObligSBinTre<T> implements Beholder<T>
     public T next() {
         if (iteratorendringer != endringer)
             throw new ConcurrentModificationException();
-        if (tom()) throw new NoSuchElementException();
+        if (tom() || !hasNext()) throw new NoSuchElementException();
+        Node<T> forrige;
+        this.q = p;   //q settes til bladnoden iteratoren peker på før den går til neste.
         while (true) {                   //traverserer inorden til neste bladnode er funnet.
+            forrige = p;
             if (p == null) throw new NoSuchElementException();
-            q = p;
             p = nesteInorden(p);
-            if (q.venstre==null && q.høyre == null) break;
-            else if(!hasNext()) break;
+            if (forrige.venstre==null && forrige.høyre == null){q = forrige; break;}
         }
         removeOK = true;
         return q.verdi;
@@ -432,6 +433,36 @@ public class ObligSBinTre<T> implements Beholder<T>
     @Override
     public void remove() {
 
+        if(iteratorendringer!=endringer) throw new ConcurrentModificationException();
+        if(!removeOK) throw new IllegalStateException();
+
+        Node<T> t = rot; //pekeren t traverserer ned fra rot til den er lik q.
+
+        while (t != null)            // leter etter q
+        {
+            int cmp = comp.compare(q.verdi,t.verdi);      // sammenligner
+            if (cmp < 0) t = t.venstre;    // går til venstre
+            else if (cmp > 0) t = t.høyre;   // går til høyre
+            else break;    // den søkte verdien ligger i p
+        }
+        if(t==null) throw new NoSuchElementException();
+
+
+        Node<T> b = t.venstre != null ? t.venstre : t.høyre;  // b for barn
+        if (t == rot) {
+            rot = b;
+        }
+        else if (t == t.forelder.venstre) t.forelder.venstre = b;
+        else t.forelder.høyre = b;
+        if(b != null) b.forelder = t.forelder;
+
+
+        removeOK = false;
+        antall--;   // det er nå én node mindre i treet
+        iteratorendringer++;
+        endringer ++;
+
+        /* JØRGEN
         Stakk<Node<T>> s = new TabellStakk<>();  // for traversering
 
         if (iteratorendringer != endringer)
@@ -499,6 +530,7 @@ public class ObligSBinTre<T> implements Beholder<T>
         iteratorendringer++;
         antall--;
         removeOK = false;
+        */
     }
 
   } // BladnodeIterator
